@@ -1,0 +1,11 @@
+# Byte-compiled Files
+*.pyc
+
+# Data Files
+*.csv
+
+# PyCharm Crap
+.idea/
+
+# Mac crap
+.DS_Store
