@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fluffy Chat</title>
+
+        <meta charset="utf-8">
+
+        <script src="http://code.jquery.com/jquery-3.0.0.slim.min.js"></script>
+
+        <link href="style.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <section class='chat-container'>
+            <header class='top-header'>
+                <div class='left'>
+                    <span class='top-header-tit'>Fluffy Chat</span>
+                </div>
+
+                <div class='right'>
+                    <span class='typicons-cog'></span>
+                </div>
+            </header>
+
+            <ol id='message-list' class='chat-box'></ol>
+
+            <form id="chat-area">
+                <div id="input-div">
+                    <input id="message" name="message" autocomplete="off" placeholder="Type your message here" />
+                    <button>Send</button>
+                </div>
+            </form>
+        </section>
+        <script>
+            var websocket = new WebSocket("ws://localhost:9898/");
+            var userName = "Tom";
+            var userId = "tomtomthegreat";
+
+            websocket.onopen = function (event) {
+                websocket.send(JSON.stringify({
+                    id: userId,
+                    name: userName,
+                    message: "start"
+                }));
+            };
+
+            websocket.onmessage = function(event) {
+                var obj = JSON.parse(event.data);
+                var scope = "another";
+
+                if (obj.id === userId) {
+                    scope = "me";
+                }
+
+                $('#message-list').append('<li class="' + scope + '"><div class="avatar-icon"><img src="fluffy_bunny.png"></div><div class="messages"><p>' + obj.message + '</p><time>' + obj.name + ' @ ' + obj.time + '</time></div></li>');
+            };
+
+            $('form').submit(function() {
+                if (!userName) {
+                    userName = $('#name').val() ? $('#name').val() : 'Sir Fluffington';
+                    localStorage["userName"] = userName;
+                    $('#messages').show();
+                    $('#input-div').show();
+                    $('#name-div').hide();
+                }
+
+                websocket.send(JSON.stringify({
+                    id: userId,
+                    name: userName,
+                    message: $('#message').val()
+                }));
+
+                $('#message').val('');
+
+                var wtf = $('.chat-box');
+                var height = wtf[0].scrollHeight;
+                wtf.scrollTop(height);
+
+                return false;
+            });
+        </script>
+    </body>
+</html>
