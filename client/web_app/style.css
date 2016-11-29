@@ -1,0 +1,191 @@
+@import url(http://weloveiconfonts.com/api/?family=fontawesome|iconicstroke|typicons);
+
+[class*="fontawesome-"]:before {
+    font-family: 'FontAwesome', sans-serif;
+}
+
+[class*="iconicstroke-"]:before {
+    font-family: 'IconicStroke', sans-serif;
+}
+
+[class*="typicons-"]:before {
+    font-family: 'Typicons', sans-serif;
+}
+
+body{
+    font-family:arial,sans-serif;
+}
+
+.chat-container {
+    width: 100%;
+    margin: 20px auto;
+}
+
+.top-header {
+    background: #FCCCCC;
+    color: white;
+    padding: 0.2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.top-header-tit {
+    display: inline-block;
+    padding: 2px 5px 2px 5px;
+    font-size: 20px;
+    position: relative;
+    top: 3px;
+    left: 5px;
+}
+
+.top-header .typicons-cog{
+    position: relative;
+    top: 3px;
+    right: 3px;
+    font-size: 20px;
+    cursor:pointer;
+}
+
+.top-header .left {
+    float: left;
+}
+
+.top-header .right {
+    float: right;
+    padding-top: 5px;
+}
+
+.top-header > * {
+    position: relative;
+}
+
+.top-header::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    right: 0;
+    bottom: -100%;
+    opacity: 0.25;
+    background: radial-gradient(#FCCCCC, #fbb9b9);
+}
+
+.chat-box {
+    list-style: none;
+    background: #e5e5e5;
+    margin: 0;
+    padding: 0 0 50px 0;
+    height: 600px;
+    overflow-y: auto;
+}
+
+.chat-box li {
+    padding: 0.5rem;
+    overflow: hidden;
+    display: flex;
+}
+
+.chat-box .avatar-icon {
+    width: 40px;
+    height: 40px;
+    position: relative;
+}
+
+.chat-box .avatar-icon img {
+    display: block;
+    width: 100%;
+    background-color:#FCCCCC;
+}
+
+.another .avatar-icon:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border: 5px solid white;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+}
+
+.me {
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.me .messages {
+    order: 1;
+    border-bottom-right-radius: 0;
+}
+
+.me .avatar-icon {
+    order: 2;
+}
+
+.me .avatar-icon:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border: 5px solid white;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.messages {
+    background: white;
+    padding: 10px;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.messages p {
+    font-size: 0.8rem;
+    margin: 0 0 0.2rem 0;
+}
+
+.messages time {
+    font-size: 0.7rem;
+    color: #ccc;
+}
+
+.setting{
+    background-color: #e5e5e5;
+    height: 32px;
+    padding-top: 2px;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.setting .left {
+    float: left;
+}
+
+.setting .right {
+    float: right;
+}
+
+form { background: #FFF; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+form input { border: 0; padding: 10px; width: 85%; margin-right: .5%; float:left;}
+form button { width: 7%; background: #FCCCCC; border: none; padding: 10px; float:right;}
+
+.iconicstroke-user:hover, .typicons-cog:hover,.fontawesome-facetime-video:hover{
+    color:#000000;
+}
+
+::-webkit-scrollbar{height:14px;width:10px;background:#eee;border-left:1px solid #ddd}
+::-webkit-scrollbar-thumb{background:#ddd;border:1px solid #cfcfcf}
+::-webkit-scrollbar-thumb:hover{background:#b2b2b2;border:1px solid #b2b2b2}
+::-webkit-scrollbar-thumb:active{background:#b2b2b2;border:1px solid #b2b2b2}
+
+@-webkit-keyframes pulse {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.5;
+    }
+}
