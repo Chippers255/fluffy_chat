@@ -5,42 +5,53 @@
 
         <meta charset="utf-8">
 
-        <script src="http://code.jquery.com/jquery-3.0.0.slim.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+        <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
 
-        <link href="style.css" rel="stylesheet" />
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     </head>
 
     <body>
-        <section class='chat-container'>
-            <header class='top-header'>
-                <div class='left'>
-                    <span class='top-header-tit'>Fluffy Chat</span>
-                </div>
+        <header id="chat-header">
+            <div id="left">
+                <span id='header-title'>Fluffy Chat</span>
+            </div>
+            <div id='right'>
+                <span id="header-settings"><i class="fa fa-cog"></i></span>
+            </div>
+        </header>
 
-                <div class='right'>
-                    <span class='typicons-cog'></span>
-                </div>
-            </header>
+        <aside id="chat-sidebar">
+            <ol id="users"></ol>
+            <ol id="notifications"></ol>
+        </aside>
 
-            <ol id='message-list' class='chat-box'></ol>
+        <section id='chat-container'>
+            <ol id='message-box'></ol>
 
-            <form id="chat-area">
-                <div id="input-div">
-                    <input id="message" name="message" autocomplete="off" placeholder="Type your message here" />
-                    <button>Send</button>
-                </div>
+            <form id="input-box">
+                <input id="message" name="message" autocomplete="off" placeholder="Type your message here" />
+                <button>Send</button>
             </form>
         </section>
+
         <script>
             var websocket = new WebSocket("ws://localhost:9898/");
             var userName = "Tom";
-            var userId = "tomtomthegreat";
+            var userId = localStorage["userId"];
+
+            if (!userId) {
+                userId = Math.floor((Math.random() * 1000000) + 1);
+                localStorage["userId"] = userId;
+            }
 
             websocket.onopen = function (event) {
                 websocket.send(JSON.stringify({
+                    type: "connection",
                     id: userId,
-                    name: userName,
-                    message: "start"
+                    name: userName
                 }));
             };
 
@@ -48,11 +59,18 @@
                 var obj = JSON.parse(event.data);
                 var scope = "another";
 
-                if (obj.id === userId) {
-                    scope = "me";
-                }
+                if (obj.type === "update_users") {
+                    $('#users').replaceWith('<ol id="users"></ol>');
+                    for (var i = 0; i < obj.users.length; i++) {
+                        $('#users').append('<li>' + obj.users[i] + '</li>');
+                    }
+                } else {
+                    if (obj.id === userId) {
+                        scope = "me";
+                    }
 
-                $('#message-list').append('<li class="' + scope + '"><div class="avatar-icon"><img src="fluffy_bunny.png"></div><div class="messages"><p>' + obj.message + '</p><time>' + obj.name + ' @ ' + obj.time + '</time></div></li>');
+                    $('#message-box').append('<li class="' + scope + '"><div class="avatar-icon"><img src="fluffy_bunny.png"></div><div class="messages"><p>' + obj.message + '</p><time>' + obj.name + ' @ ' + obj.time + '</time></div></li>');
+                }
             };
 
             $('form').submit(function() {
@@ -72,7 +90,7 @@
 
                 $('#message').val('');
 
-                var wtf = $('.chat-box');
+                var wtf = $('#message-box');
                 var height = wtf[0].scrollHeight;
                 wtf.scrollTop(height);
 

@@ -1,100 +1,113 @@
-@import url(http://weloveiconfonts.com/api/?family=fontawesome|iconicstroke|typicons);
-
-[class*="fontawesome-"]:before {
-    font-family: 'FontAwesome', sans-serif;
+html {
+    min-width: 600px;
+    min-height: 600px;
+    height: 100%;
 }
 
-[class*="iconicstroke-"]:before {
-    font-family: 'IconicStroke', sans-serif;
+body {
+    font-family: arial, sans-serif;
+    margin: 0;
+    height: 100%;
 }
 
-[class*="typicons-"]:before {
-    font-family: 'Typicons', sans-serif;
-}
-
-body{
-    font-family:arial,sans-serif;
-}
-
-.chat-container {
-    width: 100%;
-    margin: 20px auto;
-}
-
-.top-header {
+#chat-header {
     background: #FCCCCC;
     color: white;
-    padding: 0.2rem;
     position: relative;
     overflow: hidden;
+    height: 5%;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.top-header-tit {
+#header-title {
     display: inline-block;
-    padding: 2px 5px 2px 5px;
-    font-size: 20px;
+    padding: 5px 8px 5px 12px;
+    font-size: 3vh;
     position: relative;
-    top: 3px;
-    left: 5px;
 }
 
-.top-header .typicons-cog{
+#header-settings {
     position: relative;
-    top: 3px;
-    right: 3px;
-    font-size: 20px;
-    cursor:pointer;
+    padding: 5px 12px 5px 8px;
+    font-size: 3vh;
+    cursor: pointer;
+    float: right;
 }
 
-.top-header .left {
+#left {
     float: left;
 }
 
-.top-header .right {
+#right {
     float: right;
-    padding-top: 5px;
 }
 
-.top-header > * {
-    position: relative;
-}
-
-.top-header::before {
-    content: '';
+#chat-header::before {
+    content: "";
     position: absolute;
     top: -100%;
     left: 0;
     right: 0;
     bottom: -100%;
     opacity: 0.25;
-    background: radial-gradient(#FCCCCC, #fbb9b9);
+    background: radial-gradient(#fbb9b9, #FCCCCC);
+    animation: pulse 1s ease alternate infinite;
 }
 
-.chat-box {
+#chat-header > * {
+    position: relative;
+}
+
+@keyframes pulse {
+  from { opacity: 0; }
+  to { opacity: 0.5; }
+}
+
+#chat-sidebar {
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px 10px 10px 10px;
+    width: 15%;
+    float: left;
+}
+
+#chat-container {
+    display: flex;
+    flex-flow: column;
+    vertical-align: top;
+    width: 80%;
+    height: 95%;
+    float: right;
+    border-left: 1px black solid;
+}
+
+#message-box {
     list-style: none;
     background: #e5e5e5;
     margin: 0;
-    padding: 0 0 50px 0;
-    height: 600px;
+    padding: 50px 10px 60px 10px;
     overflow-y: auto;
+    flex: 1 1 auto;
 }
 
-.chat-box li {
+#message-box li {
     padding: 0.5rem;
     overflow: hidden;
     display: flex;
 }
 
-.chat-box .avatar-icon {
+#message-box .avatar-icon {
     width: 40px;
     height: 40px;
     position: relative;
 }
 
-.chat-box .avatar-icon img {
+#message-box .avatar-icon img {
     display: block;
     width: 100%;
-    background-color:#FCCCCC;
+    background-color: #FCCCCC;
 }
 
 .another .avatar-icon:after {
@@ -153,39 +166,26 @@ body{
     color: #ccc;
 }
 
-.setting{
-    background-color: #e5e5e5;
-    height: 32px;
-    padding-top: 2px;
-    border-bottom: 1px solid rgba(0,0,0,.1);
+#input-box {
+    background: #FFF;
+    padding: 3px;
+    position: fixed;
+    bottom: 0;
+    width: 80%;
 }
 
-.setting .left {
-    float: left;
+#input-box input {
+    border: 0;
+    padding: 10px;
+    width: 85%;
+    margin-right: .5%;
+    float:left;
 }
 
-.setting .right {
-    float: right;
-}
-
-form { background: #FFF; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-form input { border: 0; padding: 10px; width: 85%; margin-right: .5%; float:left;}
-form button { width: 7%; background: #FCCCCC; border: none; padding: 10px; float:right;}
-
-.iconicstroke-user:hover, .typicons-cog:hover,.fontawesome-facetime-video:hover{
-    color:#000000;
-}
-
-::-webkit-scrollbar{height:14px;width:10px;background:#eee;border-left:1px solid #ddd}
-::-webkit-scrollbar-thumb{background:#ddd;border:1px solid #cfcfcf}
-::-webkit-scrollbar-thumb:hover{background:#b2b2b2;border:1px solid #b2b2b2}
-::-webkit-scrollbar-thumb:active{background:#b2b2b2;border:1px solid #b2b2b2}
-
-@-webkit-keyframes pulse {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 0.5;
-    }
+#input-box button {
+    width: 10%;
+    background: #FCCCCC;
+    border: none;
+    padding: 10px;
+    float:right;
 }
