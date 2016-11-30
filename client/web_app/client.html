@@ -37,7 +37,22 @@
             </form>
         </section>
 
+        <section id="options">
+            <form id="set-user-name">
+                <p>User Name:</p>
+                <input id="name" name="name" autocomplete="off" placeholder="Type your desired username here" />
+                <button>Send</button>
+            </form>
+            <form id="set-chat-title">
+                <p>Chat Title:</p>
+                <input id="chat" name="chat" autocomplete="off" placeholder="Type your desired chat title here" />
+                <button>Send</button>
+            </form>
+        </section>
+
         <script>
+            $("#options").hide();
+
             var websocket = new WebSocket("ws://localhost:9898/");
             var userName = "Tom";
             var userId = localStorage["userId"];
@@ -46,6 +61,9 @@
                 userId = Math.floor((Math.random() * 1000000) + 1);
                 localStorage["userId"] = userId;
             }
+
+            $('#name').val('Tom');
+            $('#chat').val('Fluffy Chat');
 
             websocket.onopen = function (event) {
                 websocket.send(JSON.stringify({
@@ -62,7 +80,7 @@
                 if (obj.type === "update_users") {
                     $('#users').replaceWith('<ol id="users"></ol>');
                     for (var i = 0; i < obj.users.length; i++) {
-                        $('#users').append('<li>' + obj.users[i] + '</li>');
+                        $('#users').append('<li><div class="avatar-icon"><img src="fluffy_bunny.png"></div><div class="user-name">' + obj.users[i] + '</div></li>');
                     }
                 } else {
                     if (obj.id === userId) {
@@ -73,15 +91,7 @@
                 }
             };
 
-            $('form').submit(function() {
-                if (!userName) {
-                    userName = $('#name').val() ? $('#name').val() : 'Sir Fluffington';
-                    localStorage["userName"] = userName;
-                    $('#messages').show();
-                    $('#input-div').show();
-                    $('#name-div').hide();
-                }
-
+            $('#input-box').submit(function() {
                 websocket.send(JSON.stringify({
                     id: userId,
                     name: userName,
@@ -95,6 +105,11 @@
                 wtf.scrollTop(height);
 
                 return false;
+            });
+
+            $("#header-settings").click(function(){
+                $("#chat-container").toggle();
+                $("#options").toggle();
             });
         </script>
     </body>

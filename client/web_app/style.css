@@ -73,6 +73,31 @@ body {
     float: left;
 }
 
+#users {
+    list-style: none;
+}
+
+#users li {
+    display: flex;
+    padding: 0.5rem;
+    align-items: center;
+}
+
+#users .user-name {
+    padding-left: 5px;
+}
+
+#options {
+    display: flex;
+    flex-flow: column;
+    vertical-align: top;
+    width: 80%;
+    height: 95%;
+    float: right;
+    border-left: 1px black solid;
+    background: #e5e5e5;
+}
+
 #chat-container {
     display: flex;
     flex-flow: column;
@@ -98,13 +123,13 @@ body {
     display: flex;
 }
 
-#message-box .avatar-icon {
+.avatar-icon {
     width: 40px;
     height: 40px;
     position: relative;
 }
 
-#message-box .avatar-icon img {
+.avatar-icon img {
     display: block;
     width: 100%;
     background-color: #FCCCCC;
@@ -167,7 +192,7 @@ body {
 }
 
 #input-box {
-    background: #FFF;
+    background: #e5e5e5;
     padding: 3px;
     position: fixed;
     bottom: 0;
