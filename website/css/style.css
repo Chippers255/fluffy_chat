@@ -52,11 +52,43 @@ section {
 
 section #subtitle {
     padding-top: 5%;
-    padding-left: 10%;
+    text-align: center;
 }
 
-section #about {
-    float: right;
+section #words {
+    padding-top: 20%;
+    text-align: center;
+}
+
+section #stats {
+    padding-top: 1%;
+    text-align: center;
+}
+
+section #what {
+    padding-top: 10%;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
+section #why {
+    padding-top: 1%;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
+section #who {
+    padding-top: 1%;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
+section a {
+    text-decoration: none;
+    color: #000000;
 }
 
 footer {
@@ -96,4 +128,8 @@ footer nav ul li {
 footer nav ul li a {
     text-decoration: none;
     color: #FCCCCC;
+}
+
+a:hover {
+    text-decoration: underline;
 }
