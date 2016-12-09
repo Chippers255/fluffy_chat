@@ -1,0 +1,99 @@
+body {
+    background: #FCCCCC;
+    color: #000000;
+    font-family: Bowlby One;
+    padding: 0;
+    margin: 0;
+    min-width: 600px;
+    min-height: 600px;
+}
+
+header {
+    position: fixed;
+    z-index: 1;
+    background: #000000;
+    color: #FCCCCC;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 600px;
+    text-align: center;
+}
+
+header nav {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header nav #home {
+    padding-left: 20px;
+    text-decoration: none;
+    color: #FCCCCC;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #FCCCCC;
+}
+
+section {
+    padding-top: 60px;
+}
+
+section #subtitle {
+    padding-top: 5%;
+    padding-left: 10%;
+}
+
+section #about {
+    float: right;
+}
+
+footer {
+    bottom: 0;
+    position: fixed;
+    z-index: 1;
+    background: #000000;
+    color: #FCCCCC;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 600px;
+    text-align: center;
+}
+
+footer nav {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+footer nav #tnelson {
+    padding-left: 20px;
+    text-decoration: none;
+    color: #FCCCCC;
+}
+
+footer nav ul {
+    list-style: none;
+    padding: 0 17px 0 0;
+}
+
+footer nav ul li {
+    display: inline;
+    margin: 0 3px;
+}
+
+footer nav ul li a {
+    text-decoration: none;
+    color: #FCCCCC;
+}
