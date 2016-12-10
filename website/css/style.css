@@ -55,35 +55,82 @@ section #subtitle {
     text-align: center;
 }
 
-section #words {
-    padding-top: 20%;
-    text-align: center;
-}
-
-section #stats {
+section .home {
     padding-top: 1%;
     text-align: center;
 }
 
-section #what {
+section .words {
+    padding-top: 1%;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
+section .stats {
+    padding-top: 1%;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
+section .news {
+    padding-top: 1%;
+    text-align: left;
+    width: 50%;
+    margin: 0 auto;
+}
+
+section .news .title {
+    font-size: larger;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+section .news .signoff {
+    font-size: x-small;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+section .news hr {
+    height: 2px;
+    border-width: 0;
+    color: #000000;
+    background-color: gray;
+}
+
+section .login {
+    padding-top: 1%;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
+section .login .g-signin2{
+    width: 100%;
+}
+
+section .login .g-signin2 div {
+    margin: 0 auto;
+}
+
+section .contact {
+    padding-top: 1%;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
+section .first {
     padding-top: 10%;
-    text-align: center;
-    width: 50%;
-    margin: 0 auto;
 }
 
-section #why {
-    padding-top: 1%;
-    text-align: center;
-    width: 50%;
-    margin: 0 auto;
-}
-
-section #who {
-    padding-top: 1%;
-    text-align: center;
-    width: 50%;
-    margin: 0 auto;
+section .last {
+    padding-bottom: 10%;
 }
 
 section a {
