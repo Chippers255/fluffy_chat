@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -53,6 +54,15 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 func serveChat(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.URL)
 
+	session, _ := store.Get(r, "cookie-name")
+	exp := session.Values["exp"].(int64)
+	now := time.Now().Unix()
+
+	if now >= exp {
+		fmt.Println("IT HAS EXPIRED")
+		http.Redirect(w, r, "/", http.StatusFound)
+	}
+
 	if r.URL.Path != "/chat" {
 		http.Error(w, "Not found", http.StatusNotFound)
 		return
@@ -76,6 +86,8 @@ func serveLogin(w http.ResponseWriter, r *http.Request) {
 		session, _ := store.Get(r, "cookie-name")
 		session.Values["authenticated"] = "true"
 		session.Values["token"] = token
+		session.Values["exp"] = time.Now().Add(time.Minute * 2).Unix()
+
 		session.Save(r, w)
 
 		http.Redirect(w, r, "/chat", http.StatusFound)
