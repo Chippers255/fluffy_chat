@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 )
 
@@ -44,8 +45,7 @@ type Client struct {
 	// Buffered channel of outbound messages.
 	send chan []byte
 
-	// A unique identifier for the user
-	id string
+	id uuid.UUID
 }
 
 // readPump pumps messages from the websocket connection to the hub.
@@ -69,6 +69,8 @@ func (c *Client) readPump() {
 			}
 			break
 		}
+		clientID := []byte(fmt.Sprintf("[%s]: ", c.id.String()))
+		message = append(clientID, message...)
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
 		c.hub.broadcast <- message
 	}
@@ -120,15 +122,6 @@ func (c *Client) writePump() {
 	}
 }
 
-type Payload struct {
-	Token string `json:"token"`
-}
-
-type WSConMSG struct {
-	Type    string  `json:"type"`
-	Payload Payload `json:"payload"`
-}
-
 // serveWs handles websocket requests from the peer.
 func serveWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
@@ -136,34 +129,11 @@ func serveWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		return
 	}
+	client := &Client{hub: hub, conn: conn, send: make(chan []byte, 256), id: uuid.New()}
+	client.hub.register <- client
 
-	//_, message, err := conn.ReadMessage()
-	//msg := &WSConMSG{}
-	//err = json.Unmarshal(message, msg)
-
-	//if err != nil {
-	//	fmt.Println(err)
-	//	return
-	//}
-
-	//fmt.Println(msg.Type)
-	//fmt.Println(msg.Payload.Token)
-
-	//if msg.Payload.Token == "1234" {
-	session, _ := store.Get(r, "cookie-name")
-	fmt.Println(session.Values["authenticated"])
-	fmt.Println(session.Values["token"])
-	if session.Values["token"] == "1234" {
-		client := &Client{hub: hub, conn: conn, send: make(chan []byte, 256), id: fmt.Sprintf("%v", session.Values["token"])}
-		client.hub.register <- client
-
-		// Allow collection of memory referenced by the caller by doing all work in
-		// new goroutines.
-		go client.writePump()
-		go client.readPump()
-	} else {
-		fmt.Println("BAD TOKEN")
-		conn.Close()
-		//http.Redirect(w, r, "/", http.StatusUnauthorized)
-	}
+	// Allow collection of memory referenced by the caller by doing all work in
+	// new goroutines.
+	go client.writePump()
+	go client.readPump()
 }

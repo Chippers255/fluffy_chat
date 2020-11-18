@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fluffy Chat</title>
+
+        <meta charset="utf-8">
+
+        <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+        <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
+
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    </head>
+
+    <body>
+        <header id="chat-header">
+            <div id="left">
+                <span id='header-title'>Fluffy Chat</span>
+            </div>
+            <div id='right'>
+                <span id="header-settings"><i class="fa fa-cog"></i></span>
+            </div>
+        </header>
+
+        <aside id="chat-sidebar">
+            <ol id="users"></ol>
+            <ol id="notifications"></ol>
+        </aside>
+
+        <section id='chat-container'>
+            <ol id='message-box'></ol>
+
+            <form id="input-box">
+                <input id="message" name="message" autocomplete="off" placeholder="Type your message here" />
+                <button>Send</button>
+            </form>
+        </section>
+
+        <section id="options">
+            <form id="set-user-name">
+                <p>User Name:</p>
+                <input id="name" name="name" autocomplete="off" placeholder="Type your desired username here" />
+                <button>Send</button>
+            </form>
+            <form id="set-chat-title">
+                <p>Chat Title:</p>
+                <input id="chat" name="chat" autocomplete="off" placeholder="Type your desired chat title here" />
+                <button>Send</button>
+            </form>
+        </section>
+
+        <script>
+            $("#options").hide();
+
+            var websocket = new WebSocket("ws://localhost:9898/");
+            var userName = "Tom";
+            var userId = localStorage["userId"];
+
+            if (!userId) {
+                userId = Math.floor((Math.random() * 1000000) + 1);
+                localStorage["userId"] = userId;
+            }
+
+            $('#name').val('Tom');
+            $('#chat').val('Fluffy Chat');
+
+            websocket.onopen = function (event) {
+                websocket.send(JSON.stringify({
+                    type: "connection",
+                    id: userId,
+                    name: userName
+                }));
+            };
+
+            websocket.onmessage = function(event) {
+                var obj = JSON.parse(event.data);
+                var scope = "another";
+
+                if (obj.type === "update_users") {
+                    $('#users').replaceWith('<ol id="users"></ol>');
+                    for (var i = 0; i < obj.users.length; i++) {
+                        $('#users').append('<li><div class="avatar-icon"><img src="fluffy_bunny.png"></div><div class="user-name">' + obj.users[i] + '</div></li>');
+                    }
+                } else {
+                    if (obj.id === userId) {
+                        scope = "me";
+                    }
+
+                    $('#message-box').append('<li class="' + scope + '"><div class="avatar-icon"><img src="fluffy_bunny.png"></div><div class="messages"><p>' + obj.message + '</p><time>' + obj.name + ' @ ' + obj.time + '</time></div></li>');
+                }
+            };
+
+            $('#input-box').submit(function() {
+                websocket.send(JSON.stringify({
+                    id: userId,
+                    name: userName,
+                    message: $('#message').val()
+                }));
+
+                $('#message').val('');
+
+                var wtf = $('#message-box');
+                var height = wtf[0].scrollHeight;
+                wtf.scrollTop(height);
+
+                return false;
+            });
+
+            $("#header-settings").click(function(){
+                $("#chat-container").toggle();
+                $("#options").toggle();
+            });
+        </script>
+    </body>
+</html>

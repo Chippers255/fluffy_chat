@@ -7,4 +7,4 @@ COPY home.html /app/home.html
 
 EXPOSE 8080
 
-CMD ["./fluffy"]
+CMD ["./fluffy_chat"]

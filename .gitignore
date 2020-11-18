@@ -3,6 +3,7 @@
 
 # Data Files
 *.csv
+*.log
 
 # PyCharm Crap
 .idea/
